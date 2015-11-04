@@ -68,7 +68,7 @@
 % \author{\fnms{Yuekai} \snm{Sun}}
 % \thankstext{t1}{Thanks to somebody}
 % \ead[label=e1]{yuekai@berkeley.edu}
-\address{Scribe 1 \\ Scribe 2 \\ Scribe 3 \\ Scribe 3 \\ \today}
+\address{Christopher Gagne \\ Shamindra Shrotriya \\ Peter Sujan \\ \today}
 % \affiliation{UC Berkeley}
 
 %\author{\fnms{???} \snm{???}\ead[label=e1]{???}}
@@ -102,7 +102,7 @@
 \subsection{Convergence in probability}
 Last class we went through the epsilon, delta definition. A more intuitive definition is: A sequence of r.v.'s ${{X_n}} \xrightarrow{p} X $ if 
 
-$$ P(|X_n - X | > \delta) \text{ as } n \rightarrow \infty \text{ for any } \delta>0 $$
+$$ P(|X_n - X | > \delta) \rightarrow 0 \text{ as } n \rightarrow \infty \text{ for any } \delta>0 $$
 
 \subsection{Convergence in distribution (weak convergence)}
 There are many different ways to define convergence in distribution. One useful definition is a convergence in expectation: A sequence of r.v.'s ${{X_n}} \xrightarrow{d} X $ if 
@@ -111,7 +111,7 @@ $$ E[g(X_n)] \rightarrow E[g(X)] \text{ for any bounded and continuous g} $$
 
 When $ X_n \in \mathbb{R} $, this is equivalent to the CDF definition: 
 
-$$ Fn(t) \rightarrow F(t) \text{at all t s.t. F is continuous}$$ 
+$$ F_n(t) \rightarrow F(t) \text{ at all t s.t. F is continuous}$$ 
 
 This definition has difficulties in the multivariate case in which there are many ways to define CDF's. 
 
@@ -121,12 +121,12 @@ Convergence in probability is stronger than convergence in distribution, meaning
 
 \subsection{Notation}
 
-\subsubsection{Big O: Stocastic boundedness: }
+\subsubsection{Big O: Stochastic boundedness: }
 
 
 $$ Xn = O_p(1) \text{ if } P(X_n >M) < \delta \text{ for any} \delta $$. 
 
-In words, we can make the probability that this sequence goes above some bound M arbitrarily small by increasing n far enough. 
+In words, we can make the probability that this sequence goes above some bound $M$ arbitrarily small by increasing $n$ far enough. 
 
 \subsubsection{Small o: convergence in probability}
 
@@ -188,7 +188,7 @@ $$ \text{or} \xrightarrow{d}  Z  \text { where Z is } N(0, \triangledown g(c)^T 
 \subsection{Standard IID Setup}
 \begin{enumerate}
 \item $ \hat \theta_n = \delta(X_1, ... , X_n) \text{ is an estimator for the true } \theta^* $.  Because $\hat \theta_n$, depends on samples, it is random. $\delta $  is a fixed decision rule that does not depend on number of samples. (An example of $ \delta $ would be "compute the MLE from the sample").
-\item $ X_i \sim IID F_{\theta*} $
+\item $ X_i \overset{\text{iid}}{\sim} F_{\theta*} $
 \end{enumerate}
 
 \subsection{Consistency}
@@ -199,7 +199,7 @@ Consistency is an elementary criteria for the correctness of an estimator. Techn
 
 Setup: 
 
-$$ X_i \sim Bern(p*) \text{ IID}$$
+$$ X_i \overset{\text{iid}}{\sim} \Ber(p*) $$
 
 We know the MLE: 
 $$ \hat p_{mle} = \delta(X_1,..., X_n) = \frac{1}{n} \sum X_i $$
@@ -215,20 +215,53 @@ Setup:
 $$ X_i \sim U(0,\theta*) \text{ IID}$$
 
 MLE: 
-$$ \hat \theta_{mle} = max(X_i) $$
+$$ \hat \theta_{mle} = \max(X_i) $$
 
-$$ |\hat \theta_{mle} - \theta* | = \theta^* - max(X_i) $$
+$$ |\hat \theta_{mle} - \theta* | = \theta^* - \max(X_i) $$
 We want to show, convergence in probability. 
-$$ P( \theta^* - max(X_i) >\delta) \rightarrow 0 $$
+$$ P( \theta^* - \max(X_i) >\delta) \rightarrow 0 $$
 $$ = P( \cap ( X_i < \theta - \delta)) $$
 $$ = \Pi P(  X_i < \theta - \delta) $$
-$$ =  (\frac{\theta d}{\theta})^n$$ which converges to 0. 
-
-COMMENT 
-
+$$ =  \left ( \frac{\theta - \delta}{\theta} \right )^{n}\rightarrow 0$$ as $ n \rightarrow 0 $
 
 \subsection{Uniform Law of Large Numbers (ULLN}
 
+A set of functions satisfies ULLN if $$ sup_{g \in G}\left | \frac{1}{n}\sum_{1}^{n}g\left ( X_{i} - E\left ( g\left ( X \right ) \right )\right ) \right | \overset{p}\rightarrow 0 $$
+
+If $ G $ is finite: $ G = \left \{ g_{1}, g_{2},\dots,g_{m} \right \}$ 
+
+Suppose $ g_{i}, i \in \left [ m \right ] $ obeys LLN for each $ i $. Then 
+$ G = \left \{ g_{1}, g_{2},\dots,g_{m} \right \}$ obey a ULLN:
+
+\begin{align*} 
+P\left (sup_{g \in G}\left | \frac{1}{n}\sum_{1}^{n}g\left ( X_{i} - E\left ( g\left ( X \right ) \right )\right ) \right | > \epsilon \right) \\
+= P\left (\bigcup_{i=1}^{n} \left \{ \left | \frac{1}{n}\sum_{1}^{n}g\left ( X_{i} - E\left ( g\left ( X \right ) \right )\right ) \right | > \epsilon \right \} \right) \\
+\leq \sum_{i=1}^{n} P\left (\left \{ \left | \frac{1}{n}\sum_{1}^{n}g\left ( X_{i} - E\left ( g\left ( X \right ) \right )\right ) \right | > \epsilon \right \} \right) \rightarrow 0 \tag{Boole's inequality} \\
+\end{align*}
+
+\subsubsection{Consistency of MLE}
+$$\hat \theta_{MLE} := argmax_{\theta \in \Theta}\frac{1}{n}\sum_{i \in \left [ n \right ]}l_{X_{i}}\left ( \theta \right ) $$
+
+Proof Sketch:
+\begin{enumerate}
+\item Show $ \theta^{*}=argmaxE\left [ l_{X_{i}}\left ( \theta \right ) \right ] $
+\item Show $ \frac{1}{n}\sum_{i=1}^{n}l_{X_{i}}\left ( \theta \right ) \overset{uniformly} \rightarrow E_{\theta^{*}}\left [ l_{X_{i}}\left ( \theta \right ) \right ] $
+\end{enumerate}
+
+\subsubsection{Theorem (Consistency of MLE)}
+Let $ X_{i} \overset{IID} \sim f_{\theta^{*}}$
+
+Assume:
+\begin{enumerate}
+\item $ f_{\theta^{*}}\left (X  \right ) = f_{\theta}\left (X  \right )$ if $ \theta_{*} = \theta $
+\item Uniform LLN $ sup_{\theta \in \Theta}\left | \frac{1}{n}\sum_{i=1}^{n}log\left ( f_{\theta}\left ( X_{i} \right)\right) - E_{\theta^{*}}\left [log\left ( f_{\theta}\left ( X_{i} \right) \right )  \right ] \right | \overset{p} \rightarrow 0 $ 
+\end{enumerate}
+
+Then we have:
+\begin{enumerate}
+\item $ \theta_{*} $ is the unique maximizer of $ E_{\theta^{*}}\left [ l_{X_{i}}\left ( \theta^{*} \right ) \right ] $
+\item $ E_{\theta^{*}}\left [ l_{X_{i}}\left ( \hat \theta_{MLE} \right ) \right ] \overset{p} \rightarrow E_{\theta^{*}}\left [ l_{X_{1}}\left ( \theta^{*} \right ) \right ] $ 
+\end{enumerate}
 
 
 \subsection{Proof of the Consistency of the MLE}
@@ -246,5 +279,17 @@ Proof:
 	\\ & = \log \int_{\mathcal{X}}^{} f_\theta (X_i) dX_i = \log 1 = 0 \\
 	\text{So, } E_{\theta^*} [\log (\frac{f_\theta (X_i)}{f_{\theta^*} (X_i)})] & < 0 \text{, as desired.}
 \end{align}
+Thus, $\theta^*$ is indeed the unique maximizer.\\
+Now, we prove the second claim:
+
+\begin{align}
+	& E_{\theta^*} [l_{X_i} (\theta^*)] - E_{\theta^*} [l_{X_i} (\hat{\theta}_{MLE})] \\
+	& = E_{\theta^*} [l_{X_i} (\theta^*)] - \frac{1}{n} \sum_{i=1}^{n} l_{X_i} (\theta^*) \label{A} \\
+	& \hspace{10pt} + \frac{1}{n} \sum_{i=1}^{n} l_{X_i} (\theta^*) - \frac{1}{n} \sum_{i=1}^{n} l_{X_i} (\hat{\theta}_{MLE}) \label{B} \\
+	& \hspace{10pt} + \frac{1}{n} \sum_{i=1}^{n} l_{X_i} (\hat{\theta}_{MLE}) - E_{\theta^*} [l_{X_i} (\hat{\theta}_{MLE})] \label{C} \\
+\end{align}
+
+We observe that this expression breaks up into three meaningful terms. Because $\hat{\theta}_{MLE}$ is (by definition) the maximizer of the likelihood, \ref{B} is negative. Thus, if we can show that the other two terms converge in probability to 0, the entire expression will too. We see that \ref{A} is an instance of the usual LLN, so we know that it converges to 0. Similarly, \ref{C} is an instance of the ULLN, so it also converges to 0. Thus, the entire expression converges in probability to 0.
+
 
 \end{document}
