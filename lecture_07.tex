@@ -1,0 +1,234 @@
+% Template for the submission to:
+%   The Annals of Probability           [aop]
+%   The Annals of Applied Probability   [aap]
+%   The Annals of Statistics            [aos]
+%   The Annals of Applied Statistics    [aoas]
+%   Stochastic Systems                  [ssy]
+%
+%Author: In this template, the places where you need to add information
+%        (or delete line) are indicated by {???}.  Mostly the information
+%        required is obvious, but some explanations are given in lines starting
+%Author:
+%All other lines should be ignored.  After editing, there should be
+%no instances of ??? after this line.
+
+% use option [preprint] to remove info line at bottom
+% journal options: aop,aap,aos,aoas,ssy
+% natbib option: authoryear
+\documentclass[aos,preprint]{imsart}
+  \setattribute{journal}{name}{}
+\RequirePackage[OT1]{fontenc}
+\RequirePackage{amsthm,amsmath,amssymb,amsopn,bm,natbib}
+\RequirePackage[colorlinks,citecolor=blue,urlcolor=blue]{hyperref}
+\usepackage{algorithm, algpseudocode}
+\usepackage{graphicx, epstopdf, subcaption}
+\usepackage{marginnote}
+
+% provide arXiv number if available:
+%\arxiv{arXiv:0000.0000}
+
+% put your definitions there:
+\startlocaldefs
+\numberwithin{equation}{section}
+	\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\input{defs}
+
+\newcommand{\bs}{\mathbf{s}}
+\newcommand{\bt}{\mathbf{t}}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\bbxn}{\bar{\mathbf{x}}_n}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cX}{\mathcal{X}}
+\DeclareMathOperator{\Ber}{Ber}
+\DeclareMathOperator{\bin}{bin}
+\DeclareMathOperator{\Poi}{Poi}
+\DeclareMathOperator{\unif}{unif}
+\DeclareMathOperator{\Cauchy}{Cauchy}
+\endlocaldefs
+
+\begin{document}
+
+\begin{frontmatter}
+
+% "Title of the paper"
+\title{Lecture X notes}
+\runtitle{Lecture X notes}
+
+% indicate corresponding author with \corref{}
+% \author{\fnms{Yuekai} \snm{Sun}}
+% \thankstext{t1}{Thanks to somebody}
+% \ead[label=e1]{yuekai@berkeley.edu}
+\address{Scribe 1 \\ Scribe 2 \\ Scribe 3 \\ Scribe 3 \\ \today}
+% \affiliation{UC Berkeley}
+
+%\author{\fnms{???} \snm{???}\ead[label=e1]{???}}
+%\address{\printead{e1}}
+%\and
+%\author{\fnms{???} \snm{???}\ead[label=e2]{???}}
+%\addres s{\printead{e2}}
+%\affiliation{???}
+
+\runauthor{STAT 201B}
+
+% \begin{abstract}
+% \end{abstract}
+
+%\begin{keyword}[class=AMS]
+%\kwd[Primary ]{}
+%\kwd{}
+%\kwd[; secondary ]{}
+%\end{keyword}
+
+%\begin{keyword}
+%\kwd{}
+%\kwd{}
+%\end{keyword}
+
+\end{frontmatter}
+
+
+\section{Relevant Probability Background}
+
+\subsection{Convergence in probability}
+Last class we went through the epsilon, delta definition. A more intuitive definition is: A sequence of r.v.'s ${{X_n}} \xrightarrow{p} X $ if 
+
+$$ P(|X_n - X | > \delta) \text{ as } n \rightarrow \infty \text{ for any } \delta>0 $$
+
+\subsection{Convergence in distribution (weak convergence)}
+There are many different ways to define convergence in distribution. One useful definition is a convergence in expectation: A sequence of r.v.'s ${{X_n}} \xrightarrow{d} X $ if 
+
+$$ E[g(X_n)] \rightarrow E[g(X)] \text{ for any bounded and continuous g} $$
+
+When $ X_n \in \mathbb{R} $, this is equivalent to the CDF definition: 
+
+$$ Fn(t) \rightarrow F(t) \text{at all t s.t. F is continuous}$$ 
+
+This definition has difficulties in the multivariate case in which there are many ways to define CDF's. 
+
+\subsection{Strength of convergence}
+
+Convergence in probability is stronger than convergence in distribution, meaning that ${{X_n}} \xrightarrow{p} X  \implies {{X_n}} \xrightarrow{d} X $, but the other implication does not hold. One  notable case of the reverse implication is when a sequence of r.v.'s converge to a constant:  $ {{X_n}} \xrightarrow{d} C $. 
+
+\subsection{Notation}
+
+\subsubsection{Big O: Stocastic boundedness: }
+
+
+$$ Xn = O_p(1) \text{ if } P(X_n >M) < \delta \text{ for any} \delta $$. 
+
+In words, we can make the probability that this sequence goes above some bound M arbitrarily small by increasing n far enough. 
+
+\subsubsection{Small o: convergence in probability}
+
+$$ Xn = o_p(1) \text{ if } {{X_n}} \xrightarrow{p} X $$. 
+
+Furthermore, 
+
+$$ X_n \sim O_p(B_n) \text{  if  } \frac{X_n}{B_n} \sim O_p(1) $$
+
+and, 
+
+$$ X_n \sim o_p(B_n) \text{  if  } \frac{X_n}{B_n} \sim o_p(1) $$
+
+\subsection{Continuous Mapping Theorem}
+
+Let $ X_n $ be a sequence of r.v.'s: 
+
+\begin{enumerate}
+\item $X_n \xrightarrow{p} X \implies g(X_n) \xrightarrow{p} g(X)  $
+\item $X_n \xrightarrow{d} X \implies g(X_n) \xrightarrow{d} g(X) \text{, for any continuous function g. }  $
+\end{enumerate}
+
+
+\subsection{Slutsky's Theorem}
+First you consider the joint convergence of two sequences of r.v., then apply continuous mapping theorem. 
+
+Let $ X_n \xrightarrow{d} X $ and $ Y_n \xrightarrow{d} c $. Then: 
+
+\begin{enumerate}
+\item $X_n + Y_n \xrightarrow{d} X + c  $
+\item $X_n Y_n \xrightarrow{d} cX  $
+\end{enumerate}
+
+
+\subsection{Thm. Delta Method}
+
+First is a description of the theorem, and then a more applicable corollary. 
+
+Let $a_n$ be a nonneg sequence of scalars, $X_n$ be a nonneg sequence of r.v., and c be a constant $ \in \mathbb{R} $
+
+If: 
+$$ a_n (X_n - c) \xrightarrow{d} X $$
+Then for any differentiable function g: 
+$$ a_n (g(X_n) -  g(c)) \xrightarrow{d} \triangledown g(c)^T X $$
+
+SKIPPED A BUNCH OF PROOF
+
+\subsubsection{Corollary}
+
+Let $X_n$ be asymptotically normal: 
+
+$$ \sqrt{n}(X_n - c) \xrightarrow{d} N(0,\Sigma) $$ 
+$$ \sqrt{n}(g(X_n) - g(c)) \xrightarrow{d}   \triangledown g(c)^T Z \text { where Z is } N(0,\Sigma) $$ 
+$$ \text{or} \xrightarrow{d}  Z  \text { where Z is } N(0, \triangledown g(c)^T  \Sigma  \triangledown g(c) ) $$ 
+
+
+\section{Large Sample Theory}
+
+\subsection{Standard IID Setup}
+\begin{enumerate}
+\item $ \hat \theta_n = \delta(X_1, ... , X_n) \text{ is an estimator for the true } \theta^* $.  Because $\hat \theta_n$, depends on samples, it is random. $\delta $  is a fixed decision rule that does not depend on number of samples. (An example of $ \delta $ would be "compute the MLE from the sample").
+\item $ X_i \sim IID F_{\theta*} $
+\end{enumerate}
+
+\subsection{Consistency}
+
+Consistency is an elementary criteria for the correctness of an estimator. Technically, consistency applies to a sequence of estimators (indexed by the sample number n), though some people say consistent estimators for short-hand. Informally, consistency means that the sequence of estimators converges to the right thing; it is asymptotically unbiased. Most statistics deals with only consistent estimators, though there are notable exceptions (which ones?)
+
+\subsubsection{Example: Bernoulli Trials}
+
+Setup: 
+
+$$ X_i \sim Bern(p*) \text{ IID}$$
+
+We know the MLE: 
+$$ \hat p_{mle} = \delta(X_1,..., X_n) = \frac{1}{n} \sum X_i $$
+
+By weak law of large numbers (WLLN), we know that the sample mean converges to the expected value of the r.v.: 
+
+$$ \frac{1}{n}  \sum Z_i \xrightarrow{p} p* $$
+
+\subsubsection{Example: Sample Max of Uniform}
+
+Setup: 
+
+$$ X_i \sim U(0,\theta*) \text{ IID}$$
+
+MLE: 
+$$ \hat \theta_{mle} = max(X_i) $$
+
+$$ |\hat \theta_{mle} - \theta* | = \theta^* - max(X_i) $$
+We want to show, convergence in probability. 
+$$ P( \theta^* - max(X_i) >\delta) \rightarrow 0 $$
+$$ = P( \cap ( X_i < \theta - \delta)) $$
+$$ = \Pi P(  X_i < \theta - \delta) $$
+$$ =  (\frac{\theta d}{\theta})^n$$ which converges to 0. 
+
+COMMENT 
+
+
+\subsection{Uniform Law of Large Numbers (ULLN}
+
+
+
+
+\end{document}
