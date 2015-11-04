@@ -221,14 +221,46 @@ We want to show, convergence in probability.
 $$ P( \theta^* - max(X_i) >\delta) \rightarrow 0 $$
 $$ = P( \cap ( X_i < \theta - \delta)) $$
 $$ = \Pi P(  X_i < \theta - \delta) $$
-$$ =  (\frac{\theta d}{\theta})^n$$ which converges to 0. 
-
-COMMENT 
-
+$$ =  \left ( \frac{\theta - \delta}{\theta} \right )^{n}\rightarrow 0$$ as $ n \rightarrow 0 $
 
 \subsection{Uniform Law of Large Numbers (ULLN}
 
+A set of functions satisfies ULLN if $$ sup_{g \in G}\left | \frac{1}{n}\sum_{1}^{n}g\left ( X_{i} - E\left ( g\left ( X \right ) \right )\right ) \right | \overset{p}\rightarrow 0 $$
 
+If $ G $ is finite: $ G = \left \{ g_{1}, g_{2},\dots,g_{m} \right \}$ 
 
+Suppose $ g_{i}, i \in \left [ m \right ] $ obeys LLN for each $ i $. Then 
+$ G = \left \{ g_{1}, g_{2},\dots,g_{m} \right \}$ obey a ULLN:
+
+\begin{align*} 
+P\left (sup_{g \in G}\left | \frac{1}{n}\sum_{1}^{n}g\left ( X_{i} - E\left ( g\left ( X \right ) \right )\right ) \right | > \epsilon \right)
+P\left (\bigcup_{i=1}^{n} \left \{ \left | \frac{1}{n}\sum_{1}^{n}g\left ( X_{i} - E\left ( g\left ( X \right ) \right )\right ) \right | > \epsilon \right \} \right)
+\leq P\left (\bigcup_{i=1}^{n} \left \{ \left | \frac{1}{n}\sum_{1}^{n}g\left ( X_{i} - E\left ( g\left ( X \right ) \right )\right ) \right | > \epsilon \right \} \right) (Boole's inequality)
+\rightarrow 0
+\end{align*}
+
+\subsubsection{Consistency of MLE}
+$$\hat \theta_{MLE} := argmax_{\theta \in \Theta}\frac{1}{n}\sum_{i \in \left [ n \right ]}l_{X_{i}}\left ( \theta \right ) $$
+
+Proof Sketch:
+\begin{enumerate}
+\item Show $ \theta^{*}=argmaxE\left [ l_{X_{i}}\left ( \theta \right ) \right ] $
+\item Show $ \frac{1}{n}\sum_{i=1}^{n}l_{X_{i}}\left ( \theta \right ) \overset{uniformly} \rightarrow E_{\theta^{*}}\left [ l_{X_{i}}\left ( \theta \right ) \right ] $
+\end{enumerate}
+
+\subsubsection{Theorem (Consistency of MLE)}
+Let $ X_{i} \overset{IID} \sim f_{\theta^{*}}$
+
+Assume:
+\begin{enumerate}
+\item $ f_{\theta^{*}}\left (X  \right ) = f_{\theta}\left (X  \right )$ if $ \theta_{*} = \theta $
+\item Uniform LLN $ sup_{\theta \in \Theta}\left | \frac{1}{n}\sum_{i=1}^{n}log\left ( f_{\theta}\left ( X_{i} \right)\right) - E_{\theta^{*}}\left [log\left ( f_{\theta}\left ( X_{i} \right) \right )  \right ] \right | \overset{p} \rightarrow 0 $ 
+\end{enumerate}
+
+Note:
+\begin{enumerate}
+\item $ \theta_{*} $ is the unique maximizer of $ E_{\theta^{*}}\left [ l_{X_{i}}\left ( \theta^{*} \right ) \right ] $
+\item $ E_{\theta^{*}}\left [ l_{X_{i}}\left ( \hat \theta_{MLE} \right ) \right ] \overset{p} \rightarrow E_{\theta^{*}}\left [ l_{X_{1}}\left ( \theta^{*} \right ) \right ] $ 
+\end{enumerate}
 
 \end{document}
